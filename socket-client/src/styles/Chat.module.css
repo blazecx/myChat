@@ -11,11 +11,13 @@
 .header {
   width: 100%;
   color: #fff;
-  background: #333;
+  background: #212121;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 .title {
@@ -44,7 +46,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  background: rgb(51, 51, 51);
+  background: #212121;
   justify-content: space-between;
   height: 80px;
   padding: 0 20px;
@@ -79,7 +81,7 @@
   width: 100%;
   color: #fff;
   font-size: 18px;
-  background: rgb(35, 35, 35);
+  background: #323232;
   padding: 32px;
 }
 

@@ -9,6 +9,7 @@ import icon from "../images/emoji.svg";
 import styles from "../styles/Chat.module.css";
 import Messages from "./Messages";
 
+// Подключение сокета
 const socket = io.connect("https://online-chat-900l.onrender.com");
 
 const Chat = () => {
@@ -37,14 +38,14 @@ const Chat = () => {
       setUsers(users.length);
     });
   }, []);
-
+// Выйти с комнаты
   const leftRoom = () => {
     socket.emit("leftRoom", { params });
     navigate("/");
   };
-
+// Возможность писать сообщения
   const handleChange = ({ target: { value } }) => setMessage(value);
-
+// Возможность отправлять сообщения
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -54,16 +55,16 @@ const Chat = () => {
 
     setMessage("");
   };
-
+// Открывает панель эмоджи
   const onEmojiClick = ({ emoji }) => setMessage(`${message} ${emoji}`);
 
   return (
     <div className={styles.wrap}>
       <div className={styles.header}>
         <div className={styles.title}>{params.room}</div>
-        <div className={styles.users}>{users} users in this room</div>
+        <div className={styles.users}>{users} Находятся в комнате</div>
         <button className={styles.left} onClick={leftRoom}>
-          Left the room
+          Покинуть комнату
         </button>
       </div>
 
@@ -76,7 +77,7 @@ const Chat = () => {
           <input
             type="text"
             name="message"
-            placeholder="What do you want to say?"
+            placeholder="Написать сообщение"
             value={message}
             onChange={handleChange}
             autoComplete="off"
@@ -94,7 +95,7 @@ const Chat = () => {
         </div>
 
         <div className={styles.button}>
-          <input type="submit" onSubmit={handleSubmit} value="Send a message" />
+          <input type="submit" onSubmit={handleSubmit} value="Отправить сообщение" />
         </div>
       </form>
     </div>

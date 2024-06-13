@@ -19,29 +19,31 @@ const io = new Server(server, {
   },
 });
 
+// Чел если заходит
+
 io.on("connection", (socket) => {
   socket.on("join", ({ name, room }) => {
     socket.join(room);
 
     const { user, isExist } = addUser({ name, room });
-
+// Приветсвие пользователя, проверка был ли он тут снова или нет(СЕРЫЙ СДЕЛАЙ НА ФРОНТЕ НЕ ЗАБУДЬ)
     const userMessage = isExist
-      ? `${user.name}, here you go again`
-      : `Hey my love ${user.name}`;
+      ? `${user.name}, Опять ты тут`
+      : `Ассалям Алейкум ${user.name}`;
 
     socket.emit("message", {
-      data: { user: { name: "Admin" }, message: userMessage },
+      data: { user: { name: "Админ" }, message: userMessage },
     });
-
+// такой вариант заходи первичного
     socket.broadcast.to(user.room).emit("message", {
-      data: { user: { name: "Admin" }, message: `${user.name} has joined` },
+      data: { user: { name: "Админ" }, message: `${user.name} зашёл к нам` },
     });
-
+// проверка комнаты
     io.to(user.room).emit("room", {
       data: { users: getRoomUsers(user.room) },
     });
   });
-
+// отправка сообщения
   socket.on("sendMessage", ({ message, params }) => {
     const user = findUser(params);
 
@@ -49,7 +51,7 @@ io.on("connection", (socket) => {
       io.to(user.room).emit("message", { data: { user, message } });
     }
   });
-
+// функции когда пользователь ливнул
   socket.on("leftRoom", ({ params }) => {
     const user = removeUser(params);
 
@@ -57,7 +59,7 @@ io.on("connection", (socket) => {
       const { room, name } = user;
 
       io.to(room).emit("message", {
-        data: { user: { name: "Admin" }, message: `${name} has left` },
+        data: { user: { name: "Админ" }, message: `${name} ливнул от сюда` },
       });
 
       io.to(room).emit("room", {
